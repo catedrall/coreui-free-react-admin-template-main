@@ -20,6 +20,7 @@ import {
   cilTask,
   cilUser,
   cilAccountLogout,
+  cilPeople
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { Logout } from '../Auth'
@@ -30,7 +31,7 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
-        <CAvatar src={avatar8} size="md" />
+        <CIcon icon={cilPeople} className="me-2" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownDivider />

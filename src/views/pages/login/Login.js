@@ -23,6 +23,7 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { sha384 } from 'crypto-hash'
+import { UrlGlobal } from '../../../GlobalUrl'
 
 const Login = () => {
   const usuario = {
@@ -70,7 +71,7 @@ const Login = () => {
       setState(!state)
       values.Senha = await sha384(values.Senha)
       await axios
-        .post(`https://localhost:44390/api/Login`, values)
+        .post(`${UrlGlobal()}/Login`, values)
         .then((res) => {
           console.log("veio do login: ", res.data)
           setState(false)
@@ -149,7 +150,12 @@ const Login = () => {
                       </p>
                       <Link to="/register">
                         <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                          Cadastre-se
+                          Paciente
+                        </CButton>
+                      </Link>{" "}
+                      <Link to="/register-medico">
+                        <CButton color="primary" className="mt-3" href='/register-medico' active tabIndex={-1}>
+                          Médico
                         </CButton>
                       </Link>
                     </div>

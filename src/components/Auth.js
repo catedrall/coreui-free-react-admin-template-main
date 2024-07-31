@@ -16,4 +16,6 @@ export const SetMedico = (medico) => {
 }
 export const Logout = () => {
   localStorage.removeItem(PESSOA)
+  localStorage.removeItem(MEDICO)
+  localStorage.removeItem(TOKEN_KEY)
 }

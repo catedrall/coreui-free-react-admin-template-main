@@ -21,6 +21,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
 import { sha384 } from 'crypto-hash'
 import { GetPessoa } from '../../../components/Auth'
+import { UrlGlobal } from '../../../GlobalUrl'
 registerLocale('pt-br', ptBR)
 
 const Cadastro = () => {
@@ -78,7 +79,7 @@ const Cadastro = () => {
     }
 
     await axios
-      .put(`https://localhost:44390/api/paciente/atualizar`, objetoEnviar)
+      .put(`${UrlGlobal()}/paciente/atualizar`, objetoEnviar)
       .then((res) => {
         if (res.data === null) {
           addToast(avisoErro)
@@ -93,7 +94,7 @@ const Cadastro = () => {
 
   const BuscaPaciente = async (id) => {
     await axios
-      .get(`https://localhost:44390/api/paciente/pacientes?Id=`+id)
+      .get(`${UrlGlobal()}/paciente/pacientes?Id=`+id)
       .then((res) => {
         if (res.data === null) {
           addToast(avisoErro)

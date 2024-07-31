@@ -21,6 +21,7 @@ import ptBR from 'date-fns/locale/pt-BR'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
 import { GetPessoa } from '../../../components/Auth'
+import { UrlGlobal } from '../../../GlobalUrl'
 registerLocale('pt-br', ptBR)
 
 const CadastroAgenda = () => {
@@ -47,7 +48,7 @@ const CadastroAgenda = () => {
 
   const BuscaMedicos = async () => {
     await axios
-      .get(`https://localhost:44390/api/medico/medicos`)
+      .get(`${UrlGlobal()}/medico/medicos`)
       .then((res) => {
         if (res.data.length == 0) {
           addToast(avisoErro)
@@ -76,9 +77,9 @@ const CadastroAgenda = () => {
   const EnviaDados = async (values) => {
     values.DataAgendamento = startDate
     values.IdMedico = parseInt(medicoSelecionado)
-    values.IdPaciente = GetPessoa()
+    values.IdPaciente = parseInt(GetPessoa())
     await axios
-      .post(`https://localhost:44390/api/agenda/agendar`, values)
+      .post(`${UrlGlobal()}/agenda/agendar`, values)
       .then((res) => {
         if (res.data === null) {
           addToast(avisoErro)

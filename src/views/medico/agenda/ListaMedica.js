@@ -25,6 +25,7 @@ import {
 } from '@coreui/react'
 import axios from 'axios'
 import { GetPessoa } from '../../../components/Auth'
+import { UrlGlobal } from '../../../GlobalUrl'
 
 const ListaMedica = () => {
   const pesquisa = {
@@ -47,7 +48,7 @@ const ListaMedica = () => {
   const BuscarAgenda = async () => {
     await axios
       .get(
-        `https://localhost:44390/api/agenda/agenda?Id=` +
+        `${UrlGlobal()}/agenda/agenda?Id=` +
           pesquisa.id +
           `&IdMedico=` +
           pesquisa.IdMedico +

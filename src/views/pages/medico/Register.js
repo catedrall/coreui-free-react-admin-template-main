@@ -16,7 +16,7 @@ import {
   CToastClose,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser, cilBirthdayCake } from '@coreui/icons'
+import { cilLockLocked, cilUser, cilBirthdayCake, cilContact, cilBadge } from '@coreui/icons'
 import { withMask } from 'use-mask-input'
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
@@ -34,6 +34,8 @@ const Register = () => {
     Email: '',
     Nascimento: '',
     Senha: '',
+    Crm: '',
+    Especialidade: '',
   })
 
   const [erros, setErros] = useState({
@@ -41,6 +43,8 @@ const Register = () => {
     Email: '',
     Nascimento: '',
     Senha: '',
+    Crm: '',
+    Especialidade: '',
   })
 
   const [toast, addToast] = useState(0)
@@ -55,6 +59,8 @@ const Register = () => {
     Email: yup.string().email('Email em formato inválido!').required('Campo obrigatório!'),
     Nascimento: yup.string().required('Campo obrigatório!'),
     Senha: yup.string().required('Senha obrigatória'),
+    Crm: yup.string().required('CRM obrigatório'),
+    Especialidade: yup.string().required('Especialidade obrigatória'),
     Repete: yup
       .string()
       .oneOf([yup.ref('Senha'), null], 'As senhas devem corresponder')
@@ -73,6 +79,8 @@ const Register = () => {
       Nascimento: '',
       Senha: '',
       Repete: '',
+      Especialidade:'',
+      Crm:'',
     },
   })
 
@@ -86,12 +94,13 @@ const Register = () => {
       nome: values.Nome,
       email: values.Email,
       senha: criptografada,
+      crm: values.Crm,
+      especialidade: values.Especialidade,
       dataNascimento: getFormatedDate(values.Nascimento),
     }
 
-    //`https://localhost:44356/api/Endereco/`, values
     await axios
-      .post(`${UrlGlobal()}/paciente/criar`, objetoEnviar)
+      .post(`${UrlGlobal()}/medico/criar`, objetoEnviar)
       .then((res) => {
         if (res.data === null) {
           addToast(avisoErro)
@@ -133,7 +142,7 @@ const Register = () => {
               <CCard className="mx-4">
                 <CCardBody className="p-4">
                   <CForm onSubmit={handleSubmit(onSubmit)}>
-                    <h1>Cadastro</h1>
+                    <h1>Cadastro médico</h1>
                     <p className="text-body-secondary">Faça seu cadastro</p>
                     <span style={{ color: 'red' }}>{errors.Nome?.message}</span>
                     <CInputGroup className="mb-3">
@@ -165,6 +174,36 @@ const Register = () => {
                               {...field}
                               ref={withMask('99/99/9999')}
                             />
+                          </>
+                        )}
+                      />
+                    </CInputGroup>
+                    <span style={{ color: 'red' }}>{errors.Especialidade?.message}</span>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText>
+                        <CIcon icon={cilBadge} />
+                      </CInputGroupText>
+                      <Controller
+                        name="Especialidade"
+                        control={control}
+                        render={({ field }) => (
+                          <>
+                            <CFormInput placeholder="Especialidade" {...field} />
+                          </>
+                        )}
+                      />
+                    </CInputGroup>
+                    <span style={{ color: 'red' }}>{errors.Crm?.message}</span>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText>
+                        <CIcon icon={cilContact} />
+                      </CInputGroupText>
+                      <Controller
+                        name="Crm"
+                        control={control}
+                        render={({ field }) => (
+                          <>
+                            <CFormInput placeholder="CRM" {...field} />
                           </>
                         )}
                       />

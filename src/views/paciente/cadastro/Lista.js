@@ -32,6 +32,7 @@ import { withMask } from 'use-mask-input'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm, Controller } from 'react-hook-form'
+import { UrlGlobal } from '../../../GlobalUrl'
 
 const Lista = () => {
   const pesquisa = {
@@ -73,7 +74,7 @@ const Lista = () => {
   const BuscarAgenda = async () => {
     await axios
       .get(
-        `https://localhost:44390/api/agenda/agenda?Id=` +
+        `${UrlGlobal()}/agenda/agenda?Id=` +
           pesquisa.id +
           `&IdMedico=` +
           pesquisa.IdMedico +
@@ -84,7 +85,6 @@ const Lista = () => {
         if (res.data === null) {
           //addToast(avisoErro)
         } else {
-          //addToast(avisoSucesso)
           let agenda = new Array()
           res.data.Agendamentos.forEach((element) => {
             let dataVeio = new Date(element.DataAgendamento)
@@ -116,7 +116,7 @@ const Lista = () => {
 
   const RemoverConsulta = async () => {
     await axios
-      .delete(`https://localhost:44390/api/agenda/remover/` + idConsulta)
+      .delete(`${UrlGlobal()}/agenda/remover/` + idConsulta)
       .then((res) => {
         if (res.data == 'Agendamento apagado com sucesso!') {
           setVisibleModal(false)
@@ -137,7 +137,7 @@ const Lista = () => {
     values.IdMedico = parseInt(medicoSelecionado)
     values.IdPaciente = GetPessoa()
     await axios
-      .post(`https://localhost:44390/api/agenda/agendar`, values)
+      .post(`${UrlGlobal()}/agenda/agendar`, values)
       .then((res) => {
         if (res.data === null) {
           addToast(avisoErro)
@@ -217,7 +217,7 @@ const Lista = () => {
     }
     
     await axios
-      .put(`https://localhost:44390/api/agenda/reagendar`, enviar)
+      .put(`${UrlGlobal()}/agenda/reagendar`, enviar)
       .then((res) => {
         if (res.data === null) {
           addToast(avisoErro)
