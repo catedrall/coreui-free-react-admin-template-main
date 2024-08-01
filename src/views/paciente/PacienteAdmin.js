@@ -22,6 +22,7 @@ import Lista from './cadastro/Lista'
 
 const PacienteAdmin = () => {
   const [activeKey, setActiveKey] = useState(1)
+  
   return (
     <>
       <CRow>
@@ -68,7 +69,7 @@ const PacienteAdmin = () => {
                   <Cadastro />
                 </CTabPane>
                 <CTabPane role="tabpanel" aria-labelledby="profile-tab" visible={activeKey === 2}>
-                  {activeKey === 2 && <CadastroAgenda />}
+                  {activeKey === 2  && <CadastroAgenda />}
                 </CTabPane>
                 <CTabPane role="tabpanel" aria-labelledby="profile-tab" visible={activeKey === 3}>
                   {activeKey === 3 && <Lista />}

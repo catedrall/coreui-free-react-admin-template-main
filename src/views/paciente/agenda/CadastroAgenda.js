@@ -78,6 +78,7 @@ const CadastroAgenda = () => {
     values.DataAgendamento = startDate
     values.IdMedico = parseInt(medicoSelecionado)
     values.IdPaciente = parseInt(GetPessoa())
+    console.log('consulta', values)
     await axios
       .post(`${UrlGlobal()}/agenda/agendar`, values)
       .then((res) => {
@@ -119,7 +120,7 @@ const CadastroAgenda = () => {
 
   const handlerFieldEnd = (e) => {
     setHoraConsulta(e.target.value)
-    startDate.setHours(e.target.value-3, 0, 0)
+    startDate.setHours(e.target.value - 3, 0, 0)
   }
 
   return (

@@ -27,7 +27,7 @@ import {
   CFormLabel,
 } from '@coreui/react'
 import axios from 'axios'
-import { GetPessoa } from '../../../components/Auth'
+import { GetPessoa, GetMedico } from '../../../components/Auth'
 import { withMask } from 'use-mask-input'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -48,11 +48,11 @@ const Lista = () => {
   const [idConsulta, setIdConsulta] = useState(0)
   const [consultaSelecionada, setConsultaSelecionada] = useState({})
   const [toast, addToast] = useState(0)
+  const [medico, setMedico] = useState(GetMedico())
   const toaster = useRef()
 
   useEffect(() => {
     BuscarAgenda()
-    //BuscaMedicos()
   }, [])
 
   const {
@@ -67,7 +67,6 @@ const Lista = () => {
   })
 
   const onSubmit = () => {
-
     //enviaAtualizacao()
   }
 
@@ -209,13 +208,13 @@ const Lista = () => {
 
   const enviaAtualizacao = async () => {
     setVisibleModalEditar(false)
-    let data = novaDta.split("/")
+    let data = novaDta.split('/')
     let enviar = {
       Id: consultaSelecionada.ConsultaId,
-      NovaDataAgendamento: new Date(parseInt(data[2]), (parseInt(data[1]) - 1), data[0], 0, 0, 0, 0),
+      NovaDataAgendamento: new Date(parseInt(data[2]), parseInt(data[1]) - 1, data[0], 0, 0, 0, 0),
       Hora: parseInt(consultaSelecionada.Hora),
     }
-    
+
     await axios
       .put(`${UrlGlobal()}/agenda/reagendar`, enviar)
       .then((res) => {
@@ -303,7 +302,11 @@ const Lista = () => {
           </CButton>
         </CModalFooter>
       </CModal>
-      <CModal scrollable visible={visibleModalEditar} onClose={() => setVisibleModalEditar(false)}>
+      <CModal
+        scrollable
+        visible={visibleModalEditar}
+        onClose={() => setVisibleModalEditar(false)}
+      >
         <CModalHeader>
           <CModalTitle>Alteração</CModalTitle>
         </CModalHeader>
@@ -312,21 +315,13 @@ const Lista = () => {
           <CForm onSubmit={handleSubmit(onSubmit)}>
             <CRow className="row g-3">
               <CCol xs={6}>
-              <CFormLabel htmlFor="DataConsulta">Data agendamento</CFormLabel>
-              <CFormInput placeholder="" ref={withMask('99/99/9999')} value={novaDta} onChange={handlerFieldDataAlterada} />
-                {/* <Controller
-                  name="DataConsulta"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <CFormInput
-                        placeholder=""
-                        {...field}
-                        ref={withMask('99/99/9999')}
-                      />
-                    </>
-                  )}
-                /> */}
+                <CFormLabel htmlFor="DataConsulta">Data agendamento</CFormLabel>
+                <CFormInput
+                  placeholder=""
+                  ref={withMask('99/99/9999')}
+                  value={novaDta}
+                  onChange={handlerFieldDataAlterada}
+                />
               </CCol>
               <CCol xs={6}>
                 <CFormLabel htmlFor="numeroImovel">Horário</CFormLabel>

@@ -56,7 +56,6 @@ const ListaMedica = () => {
           pesquisa.IdPaciente,
       )
       .then((res) => {
-        console.log('Nova nova: ', res.data.Agendamentos)
         if (res.data === null) {
           //addToast(avisoErro)
         } else {
@@ -92,7 +91,7 @@ const ListaMedica = () => {
 
   const RemoverConsulta = async () => {
     await axios
-      .delete(`https://localhost:44390/api/agenda/remover/` + idConsulta)
+      .delete(`${UrlGlobal()}/agenda/remover/` + idConsulta)
       .then((res) => {
         if (res.data == 'Agendamento apagado com sucesso!') {
           setVisibleModal(false)

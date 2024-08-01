@@ -20,8 +20,8 @@ import ptBR from 'date-fns/locale/pt-BR'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
 import { sha384 } from 'crypto-hash'
-import { GetPessoa } from '../../../components/Auth'
 import { UrlGlobal } from '../../../GlobalUrl'
+import { GetPessoa, GetMedico } from '../../../components/Auth'
 registerLocale('pt-br', ptBR)
 
 const Cadastro = () => {
@@ -94,7 +94,7 @@ const Cadastro = () => {
 
   const BuscaPaciente = async (id) => {
     await axios
-      .get(`${UrlGlobal()}/paciente/pacientes?Id=`+id)
+      .get(`${UrlGlobal()}/paciente/pacientes?Id=` + id)
       .then((res) => {
         if (res.data === null) {
           addToast(avisoErro)
@@ -108,7 +108,6 @@ const Cadastro = () => {
   }
 
   const trataColecao = (array) => {
-    let novaArray = []
     let novoPaciente = {
       Nome: '',
       Email: '',

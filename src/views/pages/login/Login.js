@@ -69,16 +69,16 @@ const Login = () => {
     setValidated(true)
     if (values.Email !== '' && values.Password !== '') {
       setState(!state)
-      values.Senha = await sha384(values.Senha)
+      let rash = await sha384(values.Senha)
+      values.Senha = rash
       await axios
         .post(`${UrlGlobal()}/Login`, values)
         .then((res) => {
-          console.log("veio do login: ", res.data)
+          console.log('veio do login: ', res.data)
           setState(false)
-          SetPessoa(res.data.id)
           SetMedico(res.data.medico)
+          SetPessoa(res.data.id)
           SetToken(true)
-          console.log("aqui")
           history('/dashboard')
         })
         .catch((error) => {
@@ -152,9 +152,15 @@ const Login = () => {
                         <CButton color="primary" className="mt-3" active tabIndex={-1}>
                           Paciente
                         </CButton>
-                      </Link>{" "}
+                      </Link>{' '}
                       <Link to="/register-medico">
-                        <CButton color="primary" className="mt-3" href='/register-medico' active tabIndex={-1}>
+                        <CButton
+                          color="primary"
+                          className="mt-3"
+                          href="/register-medico"
+                          active
+                          tabIndex={-1}
+                        >
                           Médico
                         </CButton>
                       </Link>
